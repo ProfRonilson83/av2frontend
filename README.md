@@ -1,41 +1,47 @@
-# Quiz acadêmico — UniESBAM
+# Quiz UniESBAM – versão GitHub Pages + Firebase
 
-Programação Web Front-End • Professor MSc. Ronilson Silva
+Projeto estático com **20 questões**, correção com **comentário para cada alternativa**, painel do professor ao vivo e exportação CSV para Excel.
 
-Interface completa em `index.html`: 20 questões, identificação de alunos, correção, painel de progresso, edição de questões e exportação CSV para Excel. O Firebase sincroniza as participações entre dispositivos quando configurado.
+## Publicação online
 
-## 1. Teste local
+1. Crie um projeto em https://console.firebase.google.com/ e cadastre um **aplicativo Web** (ícone `</>`). Copie `apiKey`, `authDomain`, `projectId` e `appId` para `config.js`.
+2. Em **Authentication > Sign-in method**, ative **Anonymous** (para os alunos) e **Email/Password** (para o professor). Crie a conta do professor em Authentication > Users e anote o **UID**.
+3. Em **Firestore Database**, crie o banco. Cole o conteúdo de `firestore.rules` na aba **Rules**, substitua `SUBSTITUA_PELO_UID_DO_PROFESSOR` pelo UID do professor e **publique** as regras.
+4. Preencha `professorEmail` e `professorUid` em `config.js`. O UID precisa ser exatamente o mesmo usado nas regras do Firestore.
+5. Em **Authentication > Settings > Authorized domains**, inclua `SEU-USUARIO.github.io` (domínio real do seu GitHub Pages).
+6. Envie **todos os arquivos** para a raiz de um repositório do GitHub e ative **Settings > Pages > Deploy from a branch > main / (root)**. Acesse `https://SEU-USUARIO.github.io/NOME-DO-REPOSITORIO/`.
+7. Entre como professor, abra o quiz e acompanhe os alunos. Para testar, abra a URL em dois navegadores/dispositivos diferentes.
 
-Abra `index.html` ou execute `python -m http.server 8000` nesta pasta e acesse http://localhost:8000. Professor de demonstração: `professor@demo.local`, senha `demo123`. Abra duas abas no mesmo navegador para testar a atualização local. Não há sincronização entre computadores neste modo.
+**IMPORTANTE:** GitHub Pages só hospeda os arquivos; para sincronização em tempo real entre dispositivos é necessário Firebase configurado. Se `config.js` estiver vazio, os botões de acesso ficam **bloqueados** para impedir o uso de uma versão local sem sincronização. A nota exibida no painel durante a prova é a nota parcial com base nas respostas já marcadas; após finalizar, é a nota final. A presença online significa atividade nos últimos 60 segundos e não comprova presença física ou conexão contínua.
 
-## 2. Firebase (necessário para tempo real)
+## Segurança e privacidade
 
-1. Acesse https://console.firebase.google.com/ e crie um projeto. Adicione um aplicativo Web.
-2. Em Authentication, habilite Email/senha e Anônimo. Crie o usuário do professor com e-mail e senha próprios. Copie o UID exibido na lista de usuários.
-3. Crie um banco Cloud Firestore em modo produção. Na aba Regras, cole o conteúdo de `firestore.rules`, substituindo `UID_DO_PROFESSOR` pelo UID real, e publique.
-4. No `index.html`, procure `const CONFIG` e preencha apiKey, authDomain, projectId e appId com a configuração Web do projeto. Preencha `PROFESSOR_EMAIL` e `PROFESSOR_UID`. Não inclua a senha nem chaves de conta de serviço no código.
-5. Em Authentication > Settings > Authorized domains, autorize o domínio do GitHub Pages (`SEU-USUARIO.github.io`) e localhost se necessário.
-6. Entre primeiro como professor para criar a configuração inicial do quiz. Em seguida, compartilhe o endereço com os alunos.
+- Não coloque senha, token administrativo nem chave privada no repositório; `apiKey` do aplicativo Firebase Web é uma configuração pública.
+- As regras do Firestore restringem a leitura global das tentativas ao UID do professor. Alunos só podem consultar e escrever a própria tentativa.
+- Use dados acadêmicos apenas conforme as regras de privacidade da instituição. Oriente os alunos sobre identificação, armazenamento e acesso às notas.
+- O frontend calcula a nota; **não é um sistema antifraude** e alunos com conhecimento técnico podem modificar o próprio navegador. Para uma avaliação oficial e resistente a manipulação, é necessária correção no servidor (Cloud Functions ou backend próprio), regras adicionais e autenticação institucional.
+- Não há mais login de demonstração: o professor usa autenticação real do Firebase.
+- Ao iniciar uma nova sessão pelo painel, o sistema apaga as tentativas existentes. Exporte primeiro as notas.
 
-## 3. GitHub Pages
+## Estrutura
 
-Crie um repositório vazio no GitHub, por exemplo `quiz-academico`. Envie os arquivos desta pasta (index.html na raiz) pela interface Add file > Upload files ou pelo terminal:
+- `index.html` — quiz, correção detalhada, painel ao vivo e exportação Excel/CSV.
+- `config.js` — configuração pública do Firebase e identificação do professor.
+- `firestore.rules` — permissões do banco (publicar manualmente no console Firebase).
+- `README.md` — instruções de implantação.
 
-```sh
-git init
-git add .
-git commit -m "Projeto quiz academico"
-git branch -M main
-git remote add origin https://github.com/SEU-USUARIO/quiz-academico.git
-git push -u origin main
-```
+## Diagnóstico da mensagem “outros dispositivos NÃO aparecem”
 
-Em Settings > Pages, selecione Deploy from a branch, branch main e pasta / (root), e salve. O endereço será `https://SEU-USUARIO.github.io/quiz-academico/`.
+Ela era exibida porque o `config.js` original estava com valores vazios. Esta versão bloqueia o login até que os serviços online estejam configurados, em vez de fingir que os alunos estão sendo sincronizados.
 
-## 4. Teste de aceitação
+**Checklist para testar:**
 
-Abra o endereço publicado em dois dispositivos. No primeiro, faça login como professor. No segundo, entre como aluno e responda uma questão. Confira o progresso no painel; finalize e confira a nota. Exporte CSV e abra no Excel (UTF-8, separador ponto e vírgula). Teste que um aluno não consegue abrir o painel ou ler documentos de outros alunos. A planilha XLSX incluída é um modelo separado, não é alimentada automaticamente.
+1. Abra o GitHub Pages e confira se o aviso de configuração pendente desapareceu.
+2. No Firebase, confirme que **Authentication > Anonymous** e **Email/Password** estão habilitados.
+3. Confira se o **Firestore Database** foi criado e se as regras foram publicadas com o UID exato do professor.
+4. Confira se o domínio do GitHub Pages está autorizado na autenticação.
+5. Entre como professor em um dispositivo e como aluno em outro, usando a **mesma URL publicada**.
+6. O cadastro do aluno deve surgir imediatamente na lista do professor. Ao marcar cada resposta, a nota parcial e o progresso são atualizados.
+7. Se surgir `Missing or insufficient permissions`, verifique o UID do professor, as regras e a identidade da conta autenticada.
 
-## 5. Limitações e cuidados
-
-Projeto para revisão, não prova oficial. O gabarito está acessível no código e no documento de configuração para alunos autenticados; a identidade do aluno é autodeclarada, podendo haver duplicatas. Não há validação de matrícula institucional nem controle de presença online; "Respondendo" indica uma tentativa não finalizada, não conexão ativa. O fechamento impede novas entradas, mas permite finalizar tentativas existentes; reiniciar a sessão invalida tentativas anteriores e apaga resultados. Exporte antes de reiniciar. Não altere questões durante uma sessão. Não publique CSV com dados pessoais no GitHub. O arquivo de regras precisa ser publicado no Firebase; hospedar no GitHub não aplica regras automaticamente. O modo demonstração usa armazenamento local, sem segurança real. O teste de integração depende de um projeto Firebase configurado pelo responsável; não foi executado neste pacote.
+**Não é possível distribuir um ZIP já conectado à sua conta Firebase sem receber os dados públicos do aplicativo Web e o UID do professor.** As credenciais devem ser fornecidas pelo proprietário do projeto; nunca inclua a senha do professor no código.
