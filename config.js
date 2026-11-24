@@ -1,4 +1,3 @@
-
 window.QUIZ_CONFIG = {
   firebase: {
     apiKey: "AIzaSyBCskc1vhvR_VL0iAezb-KFHRIMJfBhUnE",
