@@ -1,0 +1,242 @@
+[
+  {
+    "tema": "Operadores",
+    "pergunta": "Um aluno pode acessar o laboratório se estiver matriculado e tiver idade mínima de 17 anos. Qual expressão atende à regra?",
+    "opcoes": [
+      "matriculado || idade >= 17",
+      "matriculado && idade >= 17",
+      "!matriculado && idade >= 17",
+      "matriculado && idade < 17"
+    ],
+    "correta": 1,
+    "explicacao": "&& exige que as duas condições sejam verdadeiras."
+  },
+  {
+    "tema": "Arrays",
+    "pergunta": "Qual o resultado de [5, 12, 18, 7].filter(n => n > 10)?",
+    "opcoes": [
+      "[5, 7]",
+      "[12, 18, 7]",
+      "[12, 18]",
+      "2"
+    ],
+    "correta": 2,
+    "explicacao": "filter retorna um novo array com os elementos aprovados pelo teste."
+  },
+  {
+    "tema": "Conversão",
+    "pergunta": "const a = \"8\"; const b = 4;\nQuais são os resultados de a + b e Number(a) + b?",
+    "opcoes": [
+      "\"84\" e 12",
+      "12 e \"84\"",
+      "84 e 12",
+      "\"12\" e 12"
+    ],
+    "correta": 0,
+    "explicacao": "Com string, + concatena; Number converte antes da soma."
+  },
+  {
+    "tema": "Variáveis",
+    "pergunta": "const aluno = { nota: 7 };\nQual operação é permitida?",
+    "opcoes": [
+      "aluno = { nota: 9 }",
+      "const aluno = {} no mesmo escopo",
+      "aluno = null",
+      "aluno.nota = 9"
+    ],
+    "correta": 3,
+    "explicacao": "const protege o vínculo, não torna o objeto imutável."
+  },
+  {
+    "tema": "Arrays de objetos",
+    "pergunta": "const itens = [{ok:true},{ok:false},{ok:false}];\nQual expressão conta os itens pendentes?",
+    "opcoes": [
+      "itens.filter(i => i.ok).length",
+      "itens.filter(i => !i.ok).length",
+      "itens.length",
+      "itens.filter(i => !i.ok)"
+    ],
+    "correta": 1,
+    "explicacao": "O filtro seleciona os dois pendentes; length retorna 2."
+  },
+  {
+    "tema": "Funções",
+    "pergunta": "Qual função retorna a quantidade de produtos com estoque positivo?",
+    "opcoes": [
+      "function contar(p) { return p.length; }",
+      "function contar(p) { return p.filter(x => x.estoque > 0); }",
+      "function contar(p) { return p.filter(x => x.estoque > 0).length; }",
+      "function contar(p) { return p.filter(x => x.estoque === 0).length; }"
+    ],
+    "correta": 2,
+    "explicacao": "A função filtra os produtos e retorna a quantidade, não o array."
+  },
+  {
+    "tema": "DOM",
+    "pergunta": "Qual instrução seleciona o elemento com id=\"aviso\" e altera seu texto?",
+    "opcoes": [
+      "document.querySelector(\"#aviso\").textContent = \"Pronto\";",
+      "document.querySelector(\"aviso\").value = \"Pronto\";",
+      "document.getElementById(\"#aviso\").textContent = \"Pronto\";",
+      "document.querySelector(\"#aviso\").textContent(\"Pronto\");"
+    ],
+    "correta": 0,
+    "explicacao": "querySelector usa # para id; textContent é propriedade."
+  },
+  {
+    "tema": "Carregamento",
+    "pergunta": "Um script externo no head tenta acessar um botão do body antes de sua criação. Qual solução mantém o script no head?",
+    "opcoes": [
+      "Adicionar async, garantindo a ordem do DOM",
+      "Trocar querySelector por getElementById",
+      "Usar innerHTML no botão",
+      "Adicionar defer à tag script externa"
+    ],
+    "correta": 3,
+    "explicacao": "defer executa o script após a análise do HTML."
+  },
+  {
+    "tema": "Eventos",
+    "pergunta": "Considerando que botao é um elemento HTML e atualizar é uma função, como executar atualizar apenas ao clicar?",
+    "opcoes": [
+      "botao.addEventListener(\"submit\", atualizar);",
+      "botao.addEventListener(\"click\", atualizar);",
+      "botao.addEventListener(\"click\", atualizar());",
+      "console.log(atualizar());"
+    ],
+    "correta": 1,
+    "explicacao": "A referência da função é registrada como ouvinte do clique."
+  },
+  {
+    "tema": "Formulários",
+    "pergunta": "No evento submit de um formulário, qual instrução impede a submissão padrão?",
+    "opcoes": [
+      "event.stopPropagation();",
+      "form.reset();",
+      "event.preventDefault();",
+      "form.submit();"
+    ],
+    "correta": 2,
+    "explicacao": "preventDefault cancela a ação padrão do evento."
+  },
+  {
+    "tema": "Validação",
+    "pergunta": "const nome = campo.value.trim();\nQual condição identifica um nome vazio ou composto apenas por espaços?",
+    "opcoes": [
+      "nome === \"\"",
+      "nome === null",
+      "nome.length > 0",
+      "nome === undefined"
+    ],
+    "correta": 0,
+    "explicacao": "trim remove espaços nas extremidades; uma entrada só de espaços vira string vazia."
+  },
+  {
+    "tema": "Validação",
+    "pergunta": "A idade foi convertida para número. Qual condição aceita somente idades inteiras de pelo menos 16 anos?",
+    "opcoes": [
+      "idade > 16",
+      "idade >= 16 || Number.isInteger(idade)",
+      "Number.isInteger(idade) && idade < 16",
+      "Number.isInteger(idade) && idade >= 16"
+    ],
+    "correta": 3,
+    "explicacao": "A idade precisa ser inteira e respeitar o limite mínimo."
+  },
+  {
+    "tema": "Segurança DOM",
+    "pergunta": "Como inserir o nome digitado pelo usuário em um novo li, sem interpretá-lo como HTML?",
+    "opcoes": [
+      "li.innerHTML = nome; lista.appendChild(li);",
+      "li.textContent = nome; lista.appendChild(li);",
+      "lista.innerHTML += nome;",
+      "li.value = nome; lista.appendChild(li);"
+    ],
+    "correta": 1,
+    "explicacao": "textContent insere texto literal; appendChild adiciona o elemento à lista."
+  },
+  {
+    "tema": "Comparação",
+    "pergunta": "Qual o resultado de \"15\" === 15 e \"15\" > 10, respectivamente?",
+    "opcoes": [
+      "true e true",
+      "false e false",
+      "false e true",
+      "true e false"
+    ],
+    "correta": 2,
+    "explicacao": "=== compara tipo e valor; > converte a string numérica nessa comparação."
+  },
+  {
+    "tema": "Depuração",
+    "pergunta": "Um formulário não responde ao clique e o console mostra TypeError ao acessar addEventListener de null. Qual investigação é mais adequada?",
+    "opcoes": [
+      "Verificar seletor e momento de carregamento do DOM",
+      "Alterar todas as variáveis para let",
+      "Remover todas as validações",
+      "Publicar novamente sem investigar"
+    ],
+    "correta": 0,
+    "explicacao": "O valor null indica que a seleção não encontrou o elemento naquele momento."
+  },
+  {
+    "tema": "Git e GitHub",
+    "pergunta": "Qual prática facilita recuperar alterações anteriores e colaborar no projeto?",
+    "opcoes": [
+      "Salvar apenas a versão final em um arquivo ZIP",
+      "Apagar commits após cada teste",
+      "Substituir o histórico por capturas de tela",
+      "Criar commits descritivos no Git e compartilhar o repositório no GitHub"
+    ],
+    "correta": 3,
+    "explicacao": "Commits registram versões; o repositório remoto facilita colaboração."
+  },
+  {
+    "tema": "Atualização da interface",
+    "pergunta": "Após alterar tarefa.concluida, qual estratégia mantém a lista HTML consistente com o array?",
+    "opcoes": [
+      "Alterar apenas a cor do botão",
+      "Executar novamente a função que renderiza a lista com os dados atualizados",
+      "Recarregar a página sem salvar os dados",
+      "Criar outra variável sem atualizar o HTML"
+    ],
+    "correta": 1,
+    "explicacao": "A renderização deve refletir o estado atualizado dos dados."
+  },
+  {
+    "tema": "Validação de e-mail",
+    "pergunta": "Qual teste básico verifica que o e-mail contém uma parte antes de @ e um domínio com ponto, sem espaços?",
+    "opcoes": [
+      "email.length > 0",
+      "email.includes(\".\")",
+      "/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)",
+      "email === \"@\""
+    ],
+    "correta": 2,
+    "explicacao": "A expressão verifica a estrutura básica, mas não confirma a existência do endereço."
+  },
+  {
+    "tema": "Testes",
+    "pergunta": "Para uma inscrição com idade mínima de 16 anos, qual conjunto testa diretamente o limite?",
+    "opcoes": [
+      "15, 16 e 17",
+      "20, 21 e 22",
+      "0, 1 e 2",
+      "30, 40 e 50"
+    ],
+    "correta": 0,
+    "explicacao": "Testes de fronteira incluem imediatamente abaixo, no limite e acima."
+  },
+  {
+    "tema": "Integração DOM",
+    "pergunta": "const lista = document.querySelector(\"#inscricoes\");\nQual trecho cria e adiciona um item à lista?",
+    "opcoes": [
+      "lista.createElement(\"li\");",
+      "document.appendChild(\"li\");",
+      "lista.textContent = document.createElement(\"li\");",
+      "const li = document.createElement(\"li\"); li.textContent = \"Inscrito\"; lista.appendChild(li);"
+    ],
+    "correta": 3,
+    "explicacao": "createElement cria o nó; textContent preenche; appendChild insere."
+  }
+]
